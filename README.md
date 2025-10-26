@@ -45,9 +45,15 @@ DailyOps+ combines your daily DevOps/IT work overview, tracks focus time and pro
 
 ## 🚀 Quick Start
 
-### Option 1: Deploy to Vercel (Easiest - No Supabase Required)
+### ⚡ Fastest Way (5 minutes - No Supabase)
 
-See **DEPLOYMENT_STEPS.md** for simple step-by-step instructions!
+See **QUICK_START.md** for the fastest path to deployment!
+
+### 📚 Detailed Guides
+
+- **DEPLOYMENT_STEPS.md** - Simple step-by-step deployment
+- **SUPABASE_SETUP.md** - Setting up Supabase (when ready)
+- **VERCEL_ENV_SETUP.md** - Adding environment variables
 
 ```bash
 # 1. Push to GitHub

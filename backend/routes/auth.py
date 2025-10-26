@@ -35,19 +35,23 @@ async def login(credentials: UserLogin):
         if not user or not session:
             raise HTTPException(status_code=401, detail="Authentication failed")
         
-        # Get user profile
+        # Get user profile or use mock data
         client = supabase_client.get_client()
         if client:
-            profile = client.table("profiles").select("*").eq("id", user.id).execute()
-            name = profile.data[0]["name"] if profile.data else user.email
+            try:
+                profile = client.table("profiles").select("*").eq("id", user.id).execute()
+                name = profile.data[0]["name"] if profile.data else user.email
+            except:
+                name = user.email
         else:
-            name = user.email
+            # Mock user without Supabase
+            name = credentials.email.split("@")[0]
         
         return {
-            "user_id": user.id,
-            "email": user.email,
+            "user_id": user.get("id", user.id),
+            "email": user.get("email", credentials.email),
             "name": name,
-            "access_token": session.access_token,
+            "access_token": session.get("access_token", "mock-token"),
             "token_type": "bearer"
         }
     except HTTPException:
@@ -70,11 +74,16 @@ async def register(user: UserRegister):
         if not auth_data or not session:
             raise HTTPException(status_code=400, detail="Registration failed")
         
+        # Handle both dict and object responses
+        user_id = auth_data.get("id") if isinstance(auth_data, dict) else auth_data.id
+        email = auth_data.get("email") if isinstance(auth_data, dict) else auth_data.email
+        access_token = session.get("access_token") if isinstance(session, dict) else session.access_token
+        
         return {
-            "user_id": auth_data.id,
-            "email": auth_data.email,
+            "user_id": user_id,
+            "email": email,
             "name": user.name,
-            "access_token": session.access_token,
+            "access_token": access_token,
             "token_type": "bearer",
             "message": "User registered successfully"
         }

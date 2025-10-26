@@ -6,19 +6,22 @@ Your personal productivity and work command center — for managing focus, work,
 
 DailyOps+ combines your daily DevOps/IT work overview, tracks focus time and productivity, and integrates with Jira, Grafana, and Slack for quick insights.
 
+**✅ Ready to deploy to Vercel! Works without Supabase (add it later when needed)**
+
 ## 🎯 Features
 
 ### User Authentication
-- **User Registration & Login**: Secure authentication powered by Supabase
+- **User Registration & Login**: Secure authentication powered by Supabase (or demo mode)
+- **Demo Mode**: Works without Supabase - uses any email/password for testing
 - **User Profile Management**: Store user information and preferences
 - **Session Management**: Persistent login sessions
 
 ### DailyOps (Work Dashboard)
-- View and manage Jira or Zoho tickets
+- View and manage tasks
 - Display Grafana/Alertmanager alerts
 - Quick Notes and Checklist
-- Generate "End of Day Report" → post to Slack or email
-- Add reminders (audits, reviews, patching)
+- Generate "End of Day Report" → post to Slack
+- Add reminders and track progress
 
 ### FocusDesk (Productivity Mode)
 - To-do list with tags (Work / Personal / Health)
@@ -32,21 +35,46 @@ DailyOps+ combines your daily DevOps/IT work overview, tracks focus time and pro
 - **Multiple Integration Types**: Configure Grafana, Jira, Slack, and custom webhooks
 - **Test Connections**: Verify integration credentials before enabling
 - **Enable/Disable Integrations**: Toggle integrations on the fly
-- **Secure Storage**: All credentials stored securely in Supabase
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: HTML + Tailwind CSS + Vanilla JS
 - **Backend**: Python + FastAPI
-- **Database & Auth**: Supabase (PostgreSQL + built-in authentication)
+- **Database & Auth**: Supabase (PostgreSQL + authentication) - Optional
 - **Hosting**: Vercel (Full-stack deployment)
 
-## 🚀 Getting Started
+## 🚀 Quick Start
+
+### Option 1: Deploy to Vercel (Easiest - No Supabase Required)
+
+See **DEPLOYMENT_STEPS.md** for simple step-by-step instructions!
+
+```bash
+# 1. Push to GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git push origin main
+
+# 2. Deploy to Vercel
+# - Go to vercel.com
+# - Import your repo
+# - Click Deploy
+# - Done!
+```
+
+### Option 2: Add Supabase Later (Optional)
+
+1. Create Supabase project at [supabase.com](https://supabase.com)
+2. Get your URL and anon key
+3. Add to Vercel environment variables
+4. Run SQL schema from `DEPLOYMENT.md`
+5. Redeploy
+
+## 🚀 Local Development
 
 ### Prerequisites
-
 - Python 3.9+
-- Node.js (optional, for local dev)
 - Git
 
 ### Installation
@@ -60,82 +88,32 @@ cd dailyops-plus
 2. Set up the backend:
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r ../requirements.txt
 ```
 
-3. Set up environment variables:
-```bash
-cp ../.env.example ../.env
-# Edit .env with your credentials
-```
-
-4. Run the backend server:
+3. Run the backend server:
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-5. Open the frontend:
-```bash
-cd ../frontend
-# Open index.html in your browser or use a simple HTTP server
-python -m http.server 3000
-```
-
-6. Visit `http://localhost:3000` in your browser.
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Supabase Configuration (Required)
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-anon-key-here
-
-# Optional: Direct API keys (can also be configured via UI)
-JIRA_BASE_URL=https://your-domain.atlassian.net
-JIRA_EMAIL=your-email@example.com
-JIRA_API_TOKEN=your-api-token
-
-GRAFANA_BASE_URL=https://grafana.example.com
-GRAFANA_API_KEY=your-grafana-api-key
-
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/YOUR/WEBHOOK/URL
-```
-
-**Note**: For production, set these environment variables in Vercel.
+4. Open the frontend in your browser or with a simple HTTP server
 
 ## 📦 Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+The app **works without Supabase** initially!
 
-### Quick Deploy
+1. **Deploy to Vercel** - See `DEPLOYMENT_STEPS.md` for details
+2. **Add Supabase** (optional) - Add environment variables in Vercel dashboard later
+3. **Done!** - Your app is live
 
-1. **Set up Supabase**:
-   - Create a project at [supabase.com](https://supabase.com)
-   - Run the SQL schema from DEPLOYMENT.md
-   - Get your URL and anon key
+### Environment Variables (Optional)
 
-2. **Push to GitHub**:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/yourusername/dailyops-plus.git
-   git push -u origin main
-   ```
+Set these in Vercel when ready for Supabase:
 
-3. **Deploy to Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Add environment variables (SUPABASE_URL, SUPABASE_ANON_KEY)
-   - Deploy!
-
-The application will be live at `https://your-project.vercel.app`
+```
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
+```
 
 ## 📁 Project Structure
 
@@ -148,60 +126,44 @@ dailyops-plus/
 │   │   ├── focus.py
 │   │   ├── alerts.py
 │   │   ├── auth.py
-│   │   └── integrations.py    # Integration management
+│   │   └── integrations.py
 │   ├── models/                 # Data models
-│   │   ├── task_model.py
-│   │   ├── focus_model.py
-│   │   └── integration_model.py
 │   └── utils/                  # Utilities
-│       ├── jira_api.py
-│       ├── grafana_api.py
-│       ├── slack_notify.py
-│       └── supabase_client.py # Supabase client
 ├── frontend/
 │   ├── index.html              # DailyOps dashboard
 │   ├── focus.html              # FocusDesk page
 │   ├── settings.html           # Settings & integrations
 │   ├── config.js               # Environment config
-│   ├── script.js               # Main logic
-│   ├── focus.js                # Focus logic
-│   ├── settings.js             # Settings logic
-│   └── style.css               # Custom styles
+│   └── *.js                    # JavaScript files
 ├── requirements.txt
-├── vercel.json
-├── DEPLOYMENT.md
-├── .gitignore
+├── vercel.json                 # Vercel config
+├── DEPLOYMENT_STEPS.md         # Simple deployment guide
+├── DEPLOYMENT.md               # Full deployment guide
 └── README.md
 ```
 
-## 🎨 Customization
+## 🎨 Usage
 
-### Adding New Integrations
+### First Time Setup
+1. Deploy to Vercel (no environment variables needed)
+2. Visit your deployed URL
+3. Click "Login" - use any email/password (demo mode)
+4. Navigate to Settings to add integrations
 
-**Via UI (Recommended)**:
-1. Go to the Settings page
+### Adding Integrations
+1. Go to Settings page
 2. Click "Add Integration"
-3. Select integration type
+3. Select type (Grafana, Jira, Slack, or Webhook)
 4. Fill in configuration details
-5. Test and enable
-
-**Programmatically**:
-1. Add integration type to `backend/routes/integrations.py`
-2. Update `frontend/settings.js` to add config fields for the new type
-3. Add API client methods in `backend/utils/`
-
-### Styling
-
-The app uses Tailwind CSS. Customize styles in:
-- `frontend/style.css` for custom CSS
-- Inline Tailwind classes in HTML files
+5. Test connection
+6. Enable when ready
 
 ## 🔐 Security
 
-- All credentials are stored securely in Supabase
-- User authentication is handled by Supabase Auth
-- Row Level Security (RLS) policies ensure data isolation
-- Environment variables are used for sensitive configuration
+- All credentials stored securely in Supabase (when configured)
+- Row Level Security (RLS) policies for data isolation
+- Environment variables for sensitive data
+- Demo mode available for testing without Supabase
 
 ## 🤝 Contributing
 
@@ -216,6 +178,7 @@ MIT License - feel free to use this project for personal or commercial purposes.
 - Built with [FastAPI](https://fastapi.tiangolo.com/)
 - UI powered by [Tailwind CSS](https://tailwindcss.com/)
 - Hosted on [Vercel](https://vercel.com/)
+- Database by [Supabase](https://supabase.com/)
 
 ## 📧 Support
 

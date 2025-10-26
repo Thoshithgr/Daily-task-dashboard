@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyOps+ - Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">DailyOps+</h1>
+            <div class="space-x-4">
+                <a href="index.html" class="hover:text-blue-200">DailyOps</a>
+                <a href="focus.html" class="hover:text-blue-200">FocusDesk</a>
+                <a href="settings.html" class="hover:text-blue-200 font-semibold">Settings</a>
+                <span id="userInfo" class="text-sm"></span>
+                <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 hidden">Logout</button>
+                <button id="authBtn" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        <h2 class="text-3xl font-bold mb-6">Settings</h2>
+
+        <!-- User Management -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 class="text-2xl font-bold mb-4">User Management</h3>
+            <div id="usersList" class="space-y-3">
+                <!-- Users will be listed here -->
+            </div>
+        </div>
+
+        <!-- Integrations Section -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Integrations</h3>
+                <button id="addIntegrationBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    + Add Integration
+                </button>
+            </div>
+            <div id="integrationsList" class="space-y-4">
+                <!-- Integrations will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Integration Modal -->
+    <div id="integrationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full m-4 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-2xl font-bold mb-4">Add/Edit Integration</h3>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Integration Type</label>
+                <select id="integrationType" class="w-full p-3 border rounded">
+                    <option value="">Select integration type...</option>
+                    <option value="grafana">Grafana</option>
+                    <option value="jira">Jira</option>
+                    <option value="slack">Slack</option>
+                    <option value="webhook">Custom Webhook</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Integration Name</label>
+                <input type="text" id="integrationName" placeholder="My Grafana" class="w-full p-3 border rounded">
+            </div>
+
+            <!-- Dynamic config fields based on integration type -->
+            <div id="configFields" class="space-y-3">
+                <!-- Will be populated based on selected type -->
+            </div>
+
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" id="integrationEnabled" checked class="mr-2">
+                    <span>Enable integration</span>
+                </label>
+            </div>
+
+            <div class="flex space-x-3">
+                <button id="saveIntegrationBtn" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Save
+                </button>
+                <button id="testIntegrationBtn" class="flex-1 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Test Connection
+                </button>
+                <button id="cancelIntegrationBtn" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full m-4">
+            <h3 class="text-2xl font-bold mb-4" id="authTitle">Login</h3>
+            
+            <div id="authTabs" class="flex mb-4">
+                <button id="loginTab" class="flex-1 py-2 bg-blue-600 text-white">Login</button>
+                <button id="registerTab" class="flex-1 py-2 bg-gray-200">Register</button>
+            </div>
+
+            <div id="loginForm" class="space-y-3">
+                <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 border rounded">
+                <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded">
+                <button id="loginSubmitBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Login
+                </button>
+            </div>
+
+            <div id="registerForm" class="space-y-3 hidden">
+                <input type="text" id="registerName" placeholder="Full Name" class="w-full p-3 border rounded">
+                <input type="email" id="registerEmail" placeholder="Email" class="w-full p-3 border rounded">
+                <input type="password" id="registerPassword" placeholder="Password" class="w-full p-3 border rounded">
+                <button id="registerSubmitBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Register
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>
+

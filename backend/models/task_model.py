@@ -7,6 +7,7 @@ class Task(BaseModel):
     description: Optional[str] = None
     status: str  # todo, in_progress, done
     priority: str  # low, medium, high
+    category: Optional[str] = None  # work, personal, focus
     tags: List[str] = []
     created_at: str
     updated_at: str
@@ -16,4 +17,5 @@ class TaskCreate(BaseModel):
     description: Optional[str] = None
     status: Optional[str] = "todo"
     priority: Optional[str] = "medium"
+    category: Optional[str] = None  # work, personal, focus
     tags: Optional[List[str]] = []

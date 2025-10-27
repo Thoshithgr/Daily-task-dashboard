@@ -74,11 +74,16 @@
     </div>
 
     <!-- Add Task Modal -->
-    <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 max-w-md w-full m-4">
             <h3 class="text-2xl font-bold mb-4">Add New Task</h3>
             <input type="text" id="taskTitle" placeholder="Task title" class="w-full p-3 border rounded mb-3">
             <textarea id="taskDescription" placeholder="Description" class="w-full p-3 border rounded mb-3 h-24"></textarea>
+            <select id="taskType" class="w-full p-3 border rounded mb-3">
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="focus">Focus Time</option>
+            </select>
             <select id="taskPriority" class="w-full p-3 border rounded mb-3">
                 <option value="low">Low Priority</option>
                 <option value="medium" selected>Medium Priority</option>
@@ -88,6 +93,35 @@
                 <button id="saveTaskBtn" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save</button>
                 <button id="cancelTaskBtn" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full m-4">
+            <h3 class="text-2xl font-bold mb-4">Login</h3>
+            <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 border rounded mb-3">
+            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded mb-3">
+            <div class="flex space-x-3">
+                <button id="loginBtn" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
+                <button id="cancelLoginBtn" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+            </div>
+            <p class="text-center mt-4 text-sm text-gray-600">Don't have an account? <button id="showRegisterBtn" class="text-blue-600 hover:underline">Register</button></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full m-4">
+            <h3 class="text-2xl font-bold mb-4">Register</h3>
+            <input type="text" id="registerName" placeholder="Name" class="w-full p-3 border rounded mb-3">
+            <input type="email" id="registerEmail" placeholder="Email" class="w-full p-3 border rounded mb-3">
+            <input type="password" id="registerPassword" placeholder="Password" class="w-full p-3 border rounded mb-3">
+            <div class="flex space-x-3">
+                <button id="registerBtn" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Register</button>
+                <button id="cancelRegisterBtn" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+            </div>
+            <p class="text-center mt-4 text-sm text-gray-600">Already have an account? <button id="showLoginBtn" class="text-blue-600 hover:underline">Login</button></p>
         </div>
     </div>
 

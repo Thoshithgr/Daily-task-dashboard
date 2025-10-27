@@ -28,6 +28,7 @@ async def create_task(task: TaskCreate):
         description=task.description,
         status=task.status or "todo",
         priority=task.priority or "medium",
+        category=task.category,
         tags=task.tags or [],
         created_at=datetime.now().isoformat(),
         updated_at=datetime.now().isoformat()
@@ -46,6 +47,7 @@ async def update_task(task_id: int, task: TaskCreate):
                 description=task.description,
                 status=task.status or t.status,
                 priority=task.priority or t.priority,
+                category=task.category if task.category else t.category,
                 tags=task.tags or t.tags,
                 created_at=t.created_at,
                 updated_at=datetime.now().isoformat()

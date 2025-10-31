@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticating...</title>
+    <script src="/frontend/config.js"></script>
+</head>
+<body>
+    <p>Completing sign-in, please wait...</p>
+    <script>
+        (async function() {
+            try {
+                const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+                const accessToken = hashParams.get('access_token');
+                if (!accessToken) {
+                    alert('No access token returned.');
+                    window.location.href = '/';
+                    return;
+                }
+
+                // Save token
+                localStorage.setItem('auth_token', accessToken);
+
+                // Fetch user info
+                const resp = await fetch(`${API_BASE_URL}/auth/me?access_token=${encodeURIComponent(accessToken)}`);
+                if (resp.ok) {
+                    const user = await resp.json();
+                    const email = user.email || user.user_metadata?.email || user?.user?.email || '';
+                    const name = user.user_metadata?.name || email.split('@')[0] || 'User';
+                    localStorage.setItem('user_email', email);
+                    localStorage.setItem('user_name', name);
+                }
+            } catch (e) {
+                console.error('Callback error', e);
+            } finally {
+                window.location.href = '/';
+            }
+        })();
+    </script>
+</body>
+</html>
+
+

@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 from backend.utils.supabase_client import supabase_client
+import os
+import urllib.parse
 
 router = APIRouter()
 
@@ -117,3 +119,17 @@ async def get_current_user(access_token: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/oauth_url")
+async def get_oauth_url(provider: str, redirect_url: str):
+    """Return the Supabase OAuth authorize URL for a provider (e.g., google)."""
+    supabase_url = os.getenv("SUPABASE_URL", "")
+    if not supabase_url:
+        raise HTTPException(status_code=400, detail="Supabase not configured")
+
+    base = supabase_url.rstrip("/") + "/auth/v1/authorize"
+    query = {
+        "provider": provider,
+        "redirect_to": redirect_url,
+    }
+    return {"url": f"{base}?{urllib.parse.urlencode(query)}"}

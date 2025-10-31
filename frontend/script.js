@@ -40,6 +40,25 @@ function setupEventListeners() {
     });
 
     document.getElementById('loginBtn').addEventListener('click', login);
+    const googleBtn = document.getElementById('googleLoginBtn');
+    if (googleBtn) {
+        googleBtn.addEventListener('click', async () => {
+            try {
+                const redirectUrl = `${window.location.origin}/auth-callback.html`;
+                const resp = await fetch(`${API_BASE_URL}/auth/oauth_url?provider=google&redirect_url=${encodeURIComponent(redirectUrl)}`);
+                if (!resp.ok) {
+                    const err = await resp.json().catch(() => ({}));
+                    alert('OAuth not available: ' + (err.detail || 'Supabase not configured'));
+                    return;
+                }
+                const data = await resp.json();
+                window.location.href = data.url;
+            } catch (e) {
+                console.error('Error starting Google login', e);
+                alert('Error starting Google login');
+            }
+        });
+    }
 
     // Register modal
     document.getElementById('cancelRegisterBtn').addEventListener('click', () => {
